@@ -19,8 +19,8 @@ const verifyToken = (req, res, next) => {
 // Add to favorites
 router.post('/', verifyToken, async (req, res) => {
     try {
-        const { movieId, title, posterPath } = req.body;
-        const userId = req.user.id; // From token
+        const { movieId, title, posterPath, mediaType } = req.body;
+        const userId = req.user.userId; // Fixed: Matches auth.js payload
 
         // Check if already exists
         const existing = await db.query(
@@ -33,21 +33,21 @@ router.post('/', verifyToken, async (req, res) => {
         }
 
         const newFavorite = await db.query(
-            'INSERT INTO favorites (user_id, movie_id, title, poster_path) VALUES ($1, $2, $3, $4) RETURNING *',
-            [userId, movieId, title, posterPath]
+            'INSERT INTO favorites (user_id, movie_id, title, poster_path, media_type) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            [userId, movieId, title, posterPath, mediaType || 'movie']
         );
 
         res.json(newFavorite.rows[0]);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error("Error adding to favorites:", err.message);
+        res.status(500).send(`Server Error: ${err.message}`);
     }
 });
 
 // Get all favorites
 router.get('/', verifyToken, async (req, res) => {
     try {
-        const userId = req.user.id;
+        const userId = req.user.userId;
         const favorites = await db.query(
             'SELECT * FROM favorites WHERE user_id = $1 ORDER BY created_at DESC',
             [userId]
@@ -63,7 +63,7 @@ router.get('/', verifyToken, async (req, res) => {
 router.delete('/:movieId', verifyToken, async (req, res) => {
     try {
         const { movieId } = req.params;
-        const userId = req.user.id;
+        const userId = req.user.userId;
 
         await db.query(
             'DELETE FROM favorites WHERE user_id = $1 AND movie_id = $2',

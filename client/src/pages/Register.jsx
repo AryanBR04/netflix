@@ -40,6 +40,7 @@ const Register = () => {
     return (
         <div className="flex justify-center items-center h-screen bg-cover bg-center" style={{ backgroundImage: "url('https://assets.nflxext.com/ffe/siteui/vlv3/f841d4c7-10e1-40af-bcae-07a3f8dc141a/f6d7434e-d6de-4185-a6d4-c77a2d08737b/US-en-20220502-popsignuptwoweeks-perspective_alpha_website_medium.jpg')" }}>
             <div className="bg-black/75 p-16 rounded-lg w-full max-w-md">
+                <h1 className="text-red-600 text-4xl font-bold mb-4 tracking-tighter">RED</h1>
                 <h2 className="text-3xl font-bold mb-8 text-white">Register</h2>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -83,7 +84,7 @@ const Register = () => {
                     Already have an account? <Link to="/login" className="text-white hover:underline">Sign in.</Link>.
                 </p>
             </div>
-        </div>
+        </div >
     );
 };
 

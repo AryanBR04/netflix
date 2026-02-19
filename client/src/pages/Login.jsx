@@ -39,7 +39,8 @@ const Login = () => {
             }}
         >
             <div className="bg-black/75 p-16 rounded-lg w-full max-w-md">
-                <h2 className="text-3xl font-bold mb-8 text-white">Sign In</h2>
+                <h1 className="text-red-600 text-4xl font-bold mb-4 tracking-tighter">RED</h1>
+                <h2 className="text-white text-2xl font-bold mb-8">Sign In</h2>
 
                 {error && <p className="text-red-500 mb-4">{error}</p>}
 

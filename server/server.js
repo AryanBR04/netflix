@@ -17,6 +17,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/favorites', favoritesRoutes);
 
 // Create Table on Start
 const createTableQuery = `

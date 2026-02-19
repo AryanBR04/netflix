@@ -3,6 +3,7 @@ import Banner from '../components/Banner';
 import Row from '../components/Row';
 import requests from '../requests';
 
+
 const Home = () => {
     return (
         <div className="bg-[#111] min-h-screen text-white">
