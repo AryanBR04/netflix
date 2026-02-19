@@ -1,0 +1,4 @@
+Error connecting to database or creating table: Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Users\ARYAN\Desktop\Netflix\server\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async initDb (C:\Users\ARYAN\Desktop\Netflix\server\server.js:32:9)
