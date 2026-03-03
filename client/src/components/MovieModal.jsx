@@ -164,7 +164,15 @@ const MovieModal = ({ movie, onClose, trailerId }) => {
             if (!type && currentMovie.name) type = 'tv';
             if (!type) type = 'movie';
 
-            const request = await axios.get(`/${type}/${currentMovie.id}/recommendations?api_key=${API_KEY}&language=en-US&page=1`);
+            // Try Recommendations first
+            let request = await axios.get(`/${type}/${currentMovie.id}/recommendations?api_key=${API_KEY}&language=en-US&page=1`);
+
+            // Fallback to Similar if no recommendations are found
+            if (!request.data.results || request.data.results.length === 0) {
+                console.log(`No recommendations for ${currentMovie.id}, fetching similar instead.`);
+                request = await axios.get(`/${type}/${currentMovie.id}/similar?api_key=${API_KEY}&language=en-US&page=1`);
+            }
+
             setRecommendations(request.data.results || []);
         } catch (error) {
             console.error("Error fetching recommendations", error);
