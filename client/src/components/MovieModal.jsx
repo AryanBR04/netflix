@@ -280,8 +280,8 @@ const MovieModal = ({ movie, onClose, trailerId }) => {
     }, []);
 
     return (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex justify-center items-center px-4">
-            <div className="relative w-full max-w-3xl bg-[#181818] rounded-md overflow-y-auto overflow-x-hidden shadow-2xl text-white max-h-[90vh]">
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex justify-center items-center px-4 pt-16 pb-4">
+            <div className="relative w-full max-w-3xl bg-[#181818] rounded-md overflow-y-auto overflow-x-hidden shadow-2xl text-white max-h-[80vh]">
                 <button
                     onClick={handleClose}
                     className="absolute top-4 right-4 z-10 p-2 bg-black bg-opacity-50 rounded-full hover:bg-opacity-80 transition"
