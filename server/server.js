@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const db = require('./db');
 const authRoutes = require('./routes/auth');
 const favoritesRoutes = require('./routes/favorites');
+const tmdbRoutes = require('./routes/tmdb');
 
 // Load environment variables
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/favorites', favoritesRoutes);
+app.use('/api/tmdb', tmdbRoutes);
 
 // Create Table on Start
 const createTableQuery = `
@@ -60,8 +62,12 @@ const initDb = async () => {
 // Start Server
 const PORT = process.env.PORT || 5000;
 
-initDb().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
+if (process.env.NODE_ENV !== 'production') {
+    initDb().then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
     });
-});
+}
+
+module.exports = app;
