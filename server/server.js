@@ -12,19 +12,16 @@ dotenv.config();
 // Initialize Express
 const app = express();
 
-// Middleware
-const corsOptions = {
-    origin: [
-        'http://localhost:5173',
-        'http://localhost:5174',
-        /\.vercel\.app$/,  // allow all vercel.app subdomains
-    ],
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-};
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Handle preflight for all routes
+// Middleware - manual CORS to guarantee headers on Vercel serverless
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+    next();
+});
 app.use(express.json());
 
 // Routes
